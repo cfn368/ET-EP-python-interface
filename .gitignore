@@ -1,0 +1,24 @@
+# Jupyter
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Python
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+env/
+
+# EnergyPLAN
+energyPLAN.exe
+energyPLAN.ini
+energyPlan Data/
+energyPlan Help/
+energyPlan Tools/
+
+# OS
+.DS_Store
+Thumbs.db
