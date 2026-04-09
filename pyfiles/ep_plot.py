@@ -14,6 +14,7 @@ from matplotlib.ticker import MaxNLocator
 
 from pyfiles.ep_run import load_monthly, load_hourly, DEFAULT_OUT_DIR
 from pyfiles.output_variables import labels as _labels
+from pyfiles.preamble import colors as _COLORS
 
 
 _LINESTYLES = ["-", "--", "-.", ":"]
@@ -65,9 +66,8 @@ def plot_monthly(
     nrows = math.ceil(len(variables) / ncols)
     n_slots = nrows * ncols
 
-    # 4. colours and linestyles — one per scenario
-    color_cycle = plt.rcParams["axes.prop_cycle"].by_key().get("color", [f"C{i}" for i in range(10)])
-    colors = [color_cycle[i % len(color_cycle)] for i in range(len(names))]
+    # 4. colours — one per scenario, cycling through global COLORS
+    colors = [_COLORS[i % len(_COLORS)] for i in range(len(names))]
 
     # 5. build figure
     fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(12, 3.5 * nrows), sharex=True)
@@ -178,9 +178,8 @@ def plot_hourly(
     if not variables:
         raise ValueError("No valid variables to plot.")
 
-    # 3. colours and linestyles — one per scenario
-    color_cycle = plt.rcParams["axes.prop_cycle"].by_key().get("color", [f"C{i}" for i in range(10)])
-    colors = [color_cycle[i % len(color_cycle)] for i in range(len(names))]
+    # 3. colours — one per scenario, cycling through global COLORS
+    colors = [_COLORS[i % len(_COLORS)] for i in range(len(names))]
 
     figs = []
 
