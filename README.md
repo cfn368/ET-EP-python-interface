@@ -54,7 +54,7 @@ pip install numpy pandas matplotlib scipy requests pyarrow
 
 ### EnergyPLAN binary
 
-Download EnergyPLAN from [energyplan.eu](https://energyplan.eu/) and place this repository in the project root. The framework resolves all paths relative to this location.
+Download EnergyPLAN from [energyplan.eu](https://energyplan.eu/download/). Unzip it, then **clone this repository into the EnergyPLAN folder** (the one containing `energyPLAN.exe`). The framework resolves all paths relative to the repository root, which must be the same directory as the binary.
 
 ### Running the notebooks
 
