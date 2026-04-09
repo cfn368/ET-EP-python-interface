@@ -1,6 +1,8 @@
 # Jupyter
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
+.claude
+runs/
 
 # Python
 __pycache__/
@@ -18,6 +20,7 @@ energyPLAN.ini
 energyPlan Data/
 energyPlan Help/
 energyPlan Tools/
+energyPlan Data/
 
 # OS
 .DS_Store

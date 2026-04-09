@@ -1,10 +1,5 @@
 # EnergyPLAN Python Framework
 
-**Author:** Linus Lindquist
-**Affiliation:** e-tank
-
----
-
 ## About
 
 This repository provides a lightweight Python framework for running and analysing [EnergyPLAN](https://www.energyplan.eu/) simulations programmatically. It wraps the EnergyPLAN Windows binary, parses its ASCII output into structured data, and exposes a clean API for scenario creation, cost analysis, time-series visualisation, and capacity optimisation.
@@ -33,10 +28,6 @@ The framework is designed as a skeleton — comprehensive enough to cover the fu
 ├── 2_get_output.ipynb          # Run scenarios, inspect costs, plot time-series
 ├── 3_optimiser.ipynb           # Minimise total system costs over capacity variables
 │
-├── energyPlan Data/            # Input files, distributions, cost data (not tracked)
-│   ├── Data/                   # Scenario .txt files (UTF-16 encoded)
-│   ├── Distributions/          # Hourly distribution files (demand, wind, solar, prices)
-│   └── Cost/                   # Cost data files
 ├── runs/                       # Parquet output files written here
 └── energyPLAN.exe              # EnergyPLAN binary (not tracked)
 ```
@@ -63,7 +54,7 @@ pip install numpy pandas matplotlib scipy requests pyarrow
 
 ### EnergyPLAN binary
 
-Download EnergyPLAN from [energyplan.eu](https://www.energyplan.eu/download/) and place `energyPLAN.exe` in the project root. The framework resolves all paths relative to this location.
+Download EnergyPLAN from [energyplan.eu](https://energyplan.eu/) and place this repository in the project root. The framework resolves all paths relative to this location.
 
 ### Running the notebooks
 
@@ -174,12 +165,10 @@ ep_run.ann_T('my_scenario')   # annual, transposed (variables as rows)
 
 ## Data
 
-Input files and distribution files are not tracked in this repository. EnergyPLAN ships with example data; additional files can be downloaded from the [EnergyPLAN website](https://www.energyplan.eu/download/) or built from national energy statistics.
+Input files and distribution files are not tracked in this repository. EnergyPLAN ships with example data; additional files can be downloaded from the [EnergyPLAN website](https://energyplan.eu/) or built from national energy statistics.
 
 Place scenario files in `energyPlan Data/Data/` and hourly distribution files in `energyPlan Data/Distributions/`.
 
 ---
 
-## Reference
-
-Lund, H. et al. (2021). *EnergyPLAN — Advanced Analysis of Smart Energy Systems.* Smart Energy, 1, 100007.
+Developed by [Linus Lindquist](https://github.com/cfn368) for [Erhvervslivets Tænketank](https://www.e-tank.dk) as part of Kernekraftprojektet.
