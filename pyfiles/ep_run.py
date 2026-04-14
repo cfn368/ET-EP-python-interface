@@ -25,10 +25,18 @@ import numpy as np
 import pandas as pd
 
 # 1. default paths — resolved relative to this file so they work on any machine.
-# energyPLAN.exe lives in the project root (one level above pyfiles/).
-_PROJECT_ROOT = Path(__file__).parent.parent
+# Expected layout:
+#   ZipEnergy/                  ← _PROJECT_ROOT: energyPLAN.exe and energyPlan Data/ live here
+#     energyPLAN.exe
+#     energyPlan Data/
+#     ZipEnergyPLAN163/         ← _REPO_ROOT: this git repo
+#       pyfiles/
+#       runs/
+#       *.ipynb
+_REPO_ROOT    = Path(__file__).parent.parent        # repo root (ZipEnergyPLAN163/)
+_PROJECT_ROOT = _REPO_ROOT.parent                   # parent folder (ZipEnergy/)
 DEFAULT_EXE     = _PROJECT_ROOT / "energyPLAN.exe"
-DEFAULT_OUT_DIR = _PROJECT_ROOT / "runs"
+DEFAULT_OUT_DIR = _REPO_ROOT / "runs"
 INPUT_DIR       = _PROJECT_ROOT / "energyPlan Data" / "Data"
 
 _MONTH_NAMES = [
