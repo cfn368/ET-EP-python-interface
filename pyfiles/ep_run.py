@@ -436,19 +436,46 @@ def _stem(name: str | Path) -> str:
 
 
 # ==================== ==================== ==================== ====================
+# 6b. apply column/index label mode
+def _relabel(names, labels: str):
+    """
+    Rename an iterable of EnergyPLAN variable names according to *labels*:
+      'model'  — keep raw model codes unchanged (default)
+      'human'  — replace with human-readable label where available
+      'both'   — "Human name (model_code)"
+    """
+    from pyfiles import output_variables  # local import avoids circular dependency
+    lbl = output_variables.labels
+    if labels == 'model':
+        return list(names)
+    if labels == 'human':
+        return [lbl.get(n, n) for n in names]
+    if labels == 'both':
+        return [f"{lbl[n]} ({n})" if n in lbl else n for n in names]
+    raise ValueError(f"labels must be 'model', 'human', or 'both', got {labels!r}")
+
+
+# ==================== ==================== ==================== ====================
 # 7. load annual production vector, transposed
 def ann_T(
     name: str | Path,
     out_dir: str | Path = DEFAULT_OUT_DIR,
+    *,
+    labels: str = 'model',
 ) -> pd.DataFrame:
     """
     Load annual production vector, transposed:
     rows = variable names, single column = run name (stem).
+
+    labels : 'model' (default) | 'human' | 'both'
+        Controls row-index naming. 'human' uses readable labels from
+        output_variables.labels; 'both' gives "Human name (model_code)".
     """
     stem = _stem(name)
     path = Path(out_dir) / f"{stem}_annual.parquet"
-    df = pd.read_parquet(path)   # shape (1, n_vars), index = run_name
-    return df.T                  # shape (n_vars, 1)
+    df = pd.read_parquet(path).T          # shape (n_vars, 1)
+    df.index = _relabel(df.index, labels)
+    return df
 
 
 # ==================== ==================== ==================== ====================
@@ -468,11 +495,20 @@ def load_scalars(
 def load_monthly(
     name: str | Path,
     out_dir: str | Path = DEFAULT_OUT_DIR,
+    *,
+    labels: str = 'model',
 ) -> pd.DataFrame:
-    """Return monthly averages (12 rows × named columns, MW)."""
+    """
+    Return monthly averages (12 rows × named columns, MW).
+
+    labels : 'model' (default) | 'human' | 'both'
+        Controls column naming. See ann_T for details.
+    """
     stem = _stem(name)
     path = Path(out_dir) / f"{stem}_monthly.parquet"
-    return pd.read_parquet(path)
+    df = pd.read_parquet(path)
+    df.columns = _relabel(df.columns, labels)
+    return df
 
 
 # ==================== ==================== ==================== ====================
@@ -480,11 +516,22 @@ def load_monthly(
 def load_hourly(
     name: str | Path,
     out_dir: str | Path = DEFAULT_OUT_DIR,
+    *,
+    labels: str = 'model',
 ) -> pd.DataFrame:
-    """Return hourly time-series (8760 rows × named columns, first col = 'hour')."""
+    """
+    Return hourly time-series (8760 rows × named columns, first col = 'hour').
+
+    labels : 'model' (default) | 'human' | 'both'
+        Controls column naming (the 'hour' column is always kept as-is).
+        See ann_T for details.
+    """
     stem = _stem(name)
     path = Path(out_dir) / f"{stem}_hourly.parquet"
-    return pd.read_parquet(path)
+    df = pd.read_parquet(path)
+    data_cols = _relabel(df.columns[1:], labels)   # skip 'hour'
+    df.columns = [df.columns[0]] + data_cols
+    return df
 
 
 # ==================== ==================== ==================== ====================

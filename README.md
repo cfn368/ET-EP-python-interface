@@ -54,7 +54,7 @@ pip install numpy pandas matplotlib scipy requests pyarrow
 
 ### EnergyPLAN binary
 
-Download EnergyPLAN from [energyplan.eu](https://energyplan.eu/download/). Unzip it, then **clone this repository into the EnergyPLAN folder** (the one containing `energyPLAN.exe`). The framework resolves all paths relative to the repository root, which must be the same directory as the binary.
+Download EnergyPLAN from [energyplan.eu](https://energyplan.eu/download/). Unzip it, then **clone this repository into the EnergyPLAN folder** (the one containing `energyPLAN.exe`). I have already set up all the relative paths, so pasting here makes it all run seemlessly, given EnergyPLAN's fixed structure.
 
 ### Running the notebooks
 
@@ -121,7 +121,7 @@ ep_plot.plot_monthly(names=['my_base', 'my_shock'], variables=['Wind_Electr.', '
 ep_plot.plot_hourly( names=['my_base', 'my_shock'], variables=['Nuclear_Electr.'])
 ```
 
-Browse `pyfiles/output_variables.py` for all available output variable names.
+Browse `pyfiles/output_variables.py` for all available output variable names. Note that for the timeseries-output, specifying labels='human' gives the interpretable names rather the the EnergyPLAN model names.
 
 ### 3. Optimise
 
